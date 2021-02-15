@@ -1,8 +1,12 @@
+var tom1, tom2, tom3, tom;
+var jerry1, jerry2, jerry3, jerry;
+var garden1, garden2;
+
 
 function preload() {
-    cat1 = loadImage("tomOne.png");
-    cat2 = loadAnimation("tomTwo.ong", "tomThree.png");
-    cat3 = loadImage("tomFour.png");
+    tom1 = loadImage("cat1.png");
+    tom2 = loadAnimation("cat2.png", "cat3.png");
+    tom3 = loadImage("cat4.png");
     jerry1 = loadImage("mouse1.png");
     jerry2 = loadAnimation("mouse2.png", "mouse3.png");
     jerry3 = loadImage("mouse4.png");
@@ -12,14 +16,20 @@ function preload() {
 function setup(){
     createCanvas(1000,800);
 
-    tom = createSprite(300,300);
-    tom.addImage(cat1);
+    garden2 = createSprite(500,400);
+    garden2.addImage(garden1);
 
-    jerry = createSprite(400,400);
-    jerry.addImage(jerry1);
+    tom = createSprite(800,600);
+    tom.addImage("tomStart", tom1);
+    tom.changeImage("tomStart");
+    tom.scale = 0.2;
 
-    garden = createSprite(500,400);
-    garden.addImage(garden1);
+    jerry = createSprite(200,600);
+    jerry.addImage("jerryStart", jerry1);
+    jerry.changeImage("jerryStart");
+    jerry.scale = 0.2;
+
+  
 }
 
 
@@ -28,27 +38,22 @@ function draw() {
     background(255);
 
     if(keyDown("left")){
+        tom.addAnimation("running", tom2)
+        tom.changeAnimation("running");
+        jerry.addAnimation("waving", jerry2)
+        jerry.changeAnimation("waving");
         tom.velocityX = -5;
-        keyPressed();
     }
 
-    if(tom.x - jerry.x < (cat.width - mouse.width)/2){
+    if(tom.x - jerry.x < (tom.width - jerry.width)/2){
         tom.velocityX = 0;
-        tom.addAnimation(cat4);
-        tom.changeAnimation(cat4);
-        
-        jerry.addAnimation(jerry3);
-        jerry.changeAnimation(jerry3);
+        tom.addImage("tomEnd", tom3);
+        tom.changeAnimation("tomEnd");
+        tom.x = 300;
+        jerry.addImage("jerryEnd", jerry3);
+        jerry.changeAnimation("jerryEnd");
     
     }
     drawSprites();
 }
 
-
-function keyPressed(){
-    tom.addAnimation(cat2);
-    tom.changeAnimation(cat2);
-
-    jerry.addAnimation(jerry2);
-    jerry.changeAnimation(jerry2);
-}
